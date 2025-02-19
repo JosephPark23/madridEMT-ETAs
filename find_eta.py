@@ -15,7 +15,7 @@ def clear():
 
 def print_eta():
     # get necessary data
-    stop_number, bus_line, stop_name, soup = ri
+    stop_number, bus_line, stop_name, soup = ri()
 
     # search html trees for the desired bus line
     while True:
