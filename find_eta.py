@@ -1,14 +1,32 @@
-from get_source import return_soup
-from get_url import get_stop_url, get_stop_number
+from return_info import return_info as ri
+from os import system, name
+from time import sleep
 
 
+# for cleaning up the screen
+def clear():
+    # windows
+    if name == 'nt':
+        _ = system('cls')
+    # mac
+    else:
+        _ = system('clear')
 
-def get_trees(soup):
-    bus_line = input("Enter your bus line: ")
-    td_tags = (soup.find_all("td"))[4:]
-    for td in td_tags:
-        if td.string == bus_line:
-            eta = td.next_sibling.next_sibling.string
-    print("ETA: " + eta)
 
-get_trees(return_soup(get_stop_url(get_stop_number())))
+def print_eta():
+    # get necessary data
+    stop_number, bus_line, stop_name, soup = ri
+
+    # search html trees for the desired bus line
+    while True:
+        td_tags = (soup.find_all("td"))[4:]
+        for td in td_tags:
+            if td.string == str(bus_line):
+                eta = td.next_sibling.next_sibling.string
+                print(f"\nBus {bus_line} will arrive in {eta}utes at the {name}.")
+        # error message
+        print(f"Sorry, no estimates are available for bus line {bus_line}.")
+        sleep(3)
+        clear()
+
+print_eta()
