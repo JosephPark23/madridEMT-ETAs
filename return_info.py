@@ -28,7 +28,8 @@ def return_soup(url):
 def get_bus_line():
     while True:
         try:
-            bus_line = int(input("Enter your bus line: "))
+            bus_line = input("Enter your bus line: ")
+            val = int(bus_line)
         except ValueError:
             print("The bus line must be an integer.")
         else:
@@ -38,7 +39,7 @@ def get_bus_line():
 def return_info():
     url, stop_number = get_stop_url()
     soup = return_soup(url)
-    stop_name = soup.h2.string.split(' ', 1)[1] # formats the stop name
+    stop_name = soup.h2.string.split(' ', 1)[1]
     bus_line = get_bus_line()
 
     return stop_number, bus_line, stop_name, soup

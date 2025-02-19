@@ -14,23 +14,23 @@ def clear():
 
 
 def find_eta():
-    # get necessary data
-    stop_number, bus_line, stop_name, soup = ri()
-
-    # search html trees for the desired bus line
     while True:
+        # get necessary data
+        stop_number, bus_line, stop_name, soup = ri()
+
+        # search html trees for the desired bus line
         td_tags = (soup.find_all("td"))[4:]
         for td in td_tags:
-            if td.string == str(bus_line):
+            if td.string == bus_line:
                 eta = td.next_sibling.next_sibling.string
                 return bus_line, stop_name, eta
-        # error message
-        print(f"Sorry, no estimates are available for bus line {bus_line}.")
+                # error message
+        print("\033[93m" + f"Sorry, no estimates are available for bus line {bus_line}." + "\033[0m")
         sleep(3)
         clear()
 
 def print_eta():
     bus_line, stop_name, eta = find_eta()
-    print(f"\nBus {bus_line} will arrive in {eta}utes at the {name}.")
+    print("\033[96m" + "\033[1m" + f"\nBus {bus_line} will arrive in {eta}utes at the {stop_name}." + "\033[0m")
 
 print_eta()
