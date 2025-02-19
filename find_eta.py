@@ -13,7 +13,7 @@ def clear():
         _ = system('clear')
 
 
-def print_eta():
+def find_eta():
     # get necessary data
     stop_number, bus_line, stop_name, soup = ri()
 
@@ -23,10 +23,14 @@ def print_eta():
         for td in td_tags:
             if td.string == str(bus_line):
                 eta = td.next_sibling.next_sibling.string
-                print(f"\nBus {bus_line} will arrive in {eta}utes at the {name}.")
+                return bus_line, stop_name, eta
         # error message
         print(f"Sorry, no estimates are available for bus line {bus_line}.")
         sleep(3)
         clear()
+
+def print_eta():
+    bus_line, stop_name, eta = find_eta()
+    print(f"\nBus {bus_line} will arrive in {eta}utes at the {name}.")
 
 print_eta()
