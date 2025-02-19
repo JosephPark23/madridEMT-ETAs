@@ -12,7 +12,7 @@ def get_stop_number():
 def get_stop_url():
     stop_number = get_stop_number()
     stop_url = f"https://www.emtmadrid.es/PMVVisor/pmv.aspx?stopnum={stop_number}"
-    return stop_url
+    return stop_url, stop_number
 
 # retrieves the EMT data
 def return_soup(url):
@@ -36,8 +36,8 @@ def get_bus_line():
 
 
 def return_info():
-    stop_number = get_stop_number()
-    soup = return_soup(get_stop_url())
+    url, stop_number = get_stop_url()
+    soup = return_soup(url)
     stop_name = soup.h2.string.split(' ', 1)[1] # formats the stop name
     bus_line = get_bus_line()
 
